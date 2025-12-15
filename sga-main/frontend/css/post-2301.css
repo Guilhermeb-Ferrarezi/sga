@@ -1,0 +1,168 @@
+.elementor-2301 .elementor-element.elementor-element-bde96eb {
+	--display: flex;
+	--min-height: 810px;
+	--justify-content: center;
+	--gap: 50px 0px;
+	--row-gap: 50px;
+	--column-gap: 0px;
+	--overlay-opacity: 0.5;
+	--margin-top: 0px;
+	--margin-bottom: 0px;
+	--margin-left: 0px;
+	--margin-right: 0px;
+	--padding-top: 50px;
+	--padding-bottom: 50px;
+	--padding-left: 30px;
+	--padding-right: 30px;
+}
+
+.elementor-2301 .elementor-element.elementor-element-bde96eb:not(.elementor-motion-effects-element-type-background),
+.elementor-2301 .elementor-element.elementor-element-bde96eb>.elementor-motion-effects-container>.elementor-motion-effects-layer {
+	background-image: url("/image/bg-em-dev.png");
+	background-position: center center;
+	background-size: cover;
+}
+
+.elementor-2301 .elementor-element.elementor-element-bde96eb::before,
+.elementor-2301 .elementor-element.elementor-element-bde96eb>.elementor-background-video-container::before,
+.elementor-2301 .elementor-element.elementor-element-bde96eb>.e-con-inner>.elementor-background-video-container::before,
+.elementor-2301 .elementor-element.elementor-element-bde96eb>.elementor-background-slideshow::before,
+.elementor-2301 .elementor-element.elementor-element-bde96eb>.e-con-inner>.elementor-background-slideshow::before,
+.elementor-2301 .elementor-element.elementor-element-bde96eb>.elementor-motion-effects-container>.elementor-motion-effects-layer::before {
+	background-color: var(--e-global-color-secondary);
+	--background-overlay: '';
+}
+
+.elementor-widget-heading .elementor-heading-title {
+	font-family: var(--e-global-typography-primary-font-family), Sans-serif;
+	font-weight: var(--e-global-typography-primary-font-weight);
+	color: var(--e-global-color-primary);
+}
+
+.elementor-2301 .elementor-element.elementor-element-df29cdf>.elementor-widget-container {
+	margin: 6px 0px -53px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.elementor-2301 .elementor-element.elementor-element-df29cdf {
+	text-align: center;
+}
+
+.elementor-2301 .elementor-element.elementor-element-df29cdf .elementor-heading-title {
+	font-family: "Korsson", Sans-serif;
+	font-size: 55px;
+	font-weight: 500;
+	line-height: 1em;
+}
+
+.elementor-2301 .elementor-element.elementor-element-dc5e791 {
+	text-align: center;
+}
+
+.elementor-2301 .elementor-element.elementor-element-dc5e791 .elementor-heading-title {
+	font-family: "Gotham Bold", Sans-serif;
+	font-weight: normal;
+	text-transform: uppercase;
+	color: #FFFFFF;
+}
+
+.elementor-widget-button .elementor-button {
+	background-color: var(--e-global-color-accent);
+	font-family: var(--e-global-typography-accent-font-family), Sans-serif;
+	font-weight: var(--e-global-typography-accent-font-weight);
+}
+
+.elementor-2301 .elementor-element.elementor-element-c73bce4>.elementor-widget-container {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+}
+
+.elementor-2301 .elementor-element.elementor-element-c73bce4 .elementor-button {
+	font-family: "Gotham Bold", Sans-serif;
+	font-weight: normal;
+}
+
+@media(max-width:1366px) {
+	.elementor-2301 .elementor-element.elementor-element-c73bce4>.elementor-widget-container {
+		margin: 0px 0px 0px 0px;
+	}
+}
+
+@media(max-width:1200px) {
+	.elementor-2301 .elementor-element.elementor-element-df29cdf .elementor-heading-title {
+		font-size: 150px;
+	}
+}
+
+@media(max-width:1024px) {
+	.elementor-2301 .elementor-element.elementor-element-df29cdf .elementor-heading-title {
+		font-size: 150px;
+	}
+}
+
+@media(max-width:880px) {
+	.elementor-2301 .elementor-element.elementor-element-df29cdf .elementor-heading-title {
+		font-size: 149px;
+	}
+
+	.elementor-2301 .elementor-element.elementor-element-c73bce4 .elementor-button {
+		font-size: 13px;
+	}
+}
+
+@media(max-width:767px) {
+	.elementor-2301 .elementor-element.elementor-element-bde96eb {
+		--min-height: 530px;
+	}
+
+	.elementor-2301 .elementor-element.elementor-element-df29cdf>.elementor-widget-container {
+		margin: 10px 0px -33px 0px;
+	}
+
+	.elementor-2301 .elementor-element.elementor-element-df29cdf .elementor-heading-title {
+		font-size: 109px;
+		line-height: 0.9em;
+	}
+
+	.elementor-2301 .elementor-element.elementor-element-dc5e791 .elementor-heading-title {
+		font-size: 24px;
+	}
+
+	.elementor-2301 .elementor-element.elementor-element-c73bce4>.elementor-widget-container {
+		margin: 0px 0px 0px 4px;
+	}
+
+	.elementor-2301 .elementor-element.elementor-element-c73bce4 .elementor-button {
+		font-size: 14px;
+	}
+}
+
+@media(min-width:2400px) {
+	.elementor-2301 .elementor-element.elementor-element-c73bce4>.elementor-widget-container {
+		margin: 0px 0px 0px 0px;
+	}
+}
+
+/* Start Custom Fonts CSS */
+@font-face {
+	font-family: 'Korsson';
+	font-style: normal;
+	font-weight: normal;
+	font-display: auto;
+	src: url('http://hyperxarenalasvegas.com/wp-content/uploads/2024/07/KORSSON.woff2') format('woff2'),
+		url('http://hyperxarenalasvegas.com/wp-content/uploads/2024/07/KORSSON.woff') format('woff'),
+		url('http://hyperxarenalasvegas.com/wp-content/uploads/2024/07/KORSSON.ttf') format('truetype');
+}
+
+/* End Custom Fonts CSS */
+/* Start Custom Fonts CSS */
+@font-face {
+	font-family: 'Gotham Bold';
+	font-style: normal;
+	font-weight: bold;
+	font-display: auto;
+	src: url('http://hyperxarenalasvegas.com/wp-content/uploads/2024/07/Gotham-Bold.woff') format('woff'),
+		url('http://hyperxarenalasvegas.com/wp-content/uploads/2024/07/Gotham-Bold.ttf') format('truetype');
+}
+
+/* End Custom Fonts CSS */

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <link rel="stylesheet" href="./css/login.css">
+    <link rel="icon" href="/image/favicon.svg">
+</head>
+
+<body>
+
+    <div class="login-wrapper">
+
+        <!-- BLOCO LOGIN -->
+        <div class="login-box">
+
+            <h2>Login</h2>
+
+            <div class="field">
+                <input type="text" id="user" placeholder="" required>
+                <label>Usuário ou email</label>
+            </div>
+
+            <div class="field field-password">
+                <input type="password" id="password" placeholder="" required>
+                <label>Senha</label>
+
+                <span class="toggle-password" id="togglePassword">
+                    <img src="./image/Login/olho-aberto.svg" alt="Mostrar senha" id="eyeIcon">
+                </span>
+            </div>
+
+            <button id="btn-entrar">Entrar</button>
+
+            <button id="btn-google">
+                <img src="./image/Login/google.svg" alt="Google">
+                Continuar com Google
+            </button>
+
+            <p id="resposta" class="msg"></p>
+
+        </div>
+
+        <div class="side-box">
+            <img src="./image/sga-logo.png" alt="SGA LOGO">
+            <h1>Bem vindo <br> de volta</h2>
+                <p>
+                    Ainda não tem uma conta? <img src="./image/Login/flech-pra-baixo.svg"
+                        style="position: relative; top: 5px;" alt="">
+                </p>
+
+                <a href="./criar-conta.html" class="btn-side">
+                    Criar conta
+                </a>
+                <a href="./email-recovery.html" class="btn-side">Esqueci minha senha!</a>
+        </div>
+
+    </div>
+
+    <script src="./js/login.js"></script>
+</body>
+
+</html>
+

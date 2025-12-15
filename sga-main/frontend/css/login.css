@@ -1,0 +1,250 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* =====================
+   BODY
+===================== */
+body {
+    min-height: 100vh;
+    background: #0d0d0d;
+    font-family: Arial, sans-serif;
+    color: #fff;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* =====================
+   WRAPPER
+===================== */
+.login-wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 760px;
+    background: #1a1a1a;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 0 35px rgba(0, 0, 0, 0.7);
+}
+
+/* =====================
+   LOGIN BOX
+===================== */
+.login-box {
+    flex: 1;
+    padding: 40px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.login-box h2 {
+    text-align: center;
+    font-size: 30px;
+}
+
+/* =====================
+   FIELD
+===================== */
+.field {
+    position: relative;
+    width: 100%;
+}
+
+/* remove setas do input number */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.field input {
+    width: 100%;
+    padding: 14px 12px;
+
+    background: #2a2a2a;
+    border: 2px solid transparent;
+    border-radius: 8px;
+
+    color: #fff;
+    font-size: 14px;
+    outline: none;
+}
+
+/* 🔥 LABEL CORRIGIDO */
+.field label {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    color: #aaa;
+    font-size: 16px;
+
+    background: transparent;
+    padding: 0 6px;
+
+    pointer-events: none;
+    transition: 0.25s ease;
+    z-index: 2;
+}
+
+/* 🔥 FLOAT FUNCIONANDO EM TODOS OS CASOS */
+.field input:focus + label,
+.field input:not(:placeholder-shown) + label {
+    top: -8px;
+    font-size: 12px;
+    color: #e4021a;
+}
+
+.field input:focus {
+    border-color: #e4021a;
+}
+
+/* =====================
+   PASSWORD ICON
+===================== */
+.field-password input {
+    padding-right: 44px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 55%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+}
+
+/* =====================
+   BUTTONS
+===================== */
+button {
+    width: 100%;
+    padding: 10px;
+
+    background: #0f0f0f;
+    border: 1px solid #fff;
+    border-radius: 12px;
+
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+button:hover {
+    transform: scale(1.06);
+    box-shadow: 0 8px 25px rgba(228, 2, 26, 0.6);
+}
+
+/* =====================
+   GOOGLE BUTTON
+===================== */
+#btn-google {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+#btn-google img {
+    width: 20px;
+}
+
+/* =====================
+   MESSAGE
+===================== */
+.msg {
+    text-align: center;
+    font-size: 14px;
+    display: none;
+}
+
+.msg.show {
+    display: block;
+}
+
+.msg.erro {
+    color: #ff6b6b;
+}
+
+.msg.sucesso {
+    color: #7cff7c;
+}
+
+/* =====================
+   SIDE BOX
+===================== */
+.side-box {
+    width: 280px;
+    background: #0f0f0f;
+    padding: 40px 24px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+
+    text-align: center;
+}
+
+.side-box h2 {
+    font-size: 26px;
+}
+
+.side-box p {
+    font-size: 20px;
+    color: #ccc;
+}
+
+/* =====================
+   SIDE BUTTON
+===================== */
+.btn-side {
+    padding: 10px;
+    border-radius: 10px;
+
+    border: 1px solid #e4021a;
+    color: #e4021a;
+    text-decoration: none;
+    font-size: 18px;
+
+    transition: all .2s ease;
+}
+
+.btn-side:hover {
+    background: #e4021a;
+    color: #fff;
+}
+
+/* =====================
+   RESPONSIVO
+===================== */
+@media (max-width: 768px) {
+    .login-wrapper {
+        flex-direction: column;
+    }
+
+    .side-box {
+        width: 100%;
+    }
+}

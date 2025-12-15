@@ -1,0 +1,258 @@
+.elementor-kit-19 {
+	--e-global-color-primary: #FFFFFF;
+	--e-global-color-secondary: #000000;
+	--e-global-color-text: #FFFFFF;
+	--e-global-color-accent: #DB2627;
+	--e-global-color-5c192bb: #FFAF2A;
+	--e-global-color-a867de6: #3765AF;
+	--e-global-color-c37e2d1: #DED2AD;
+	--e-global-typography-primary-font-family: "Gotham Bold";
+	--e-global-typography-primary-font-weight: normal;
+	--e-global-typography-secondary-font-family: "Gotham Medium";
+	--e-global-typography-secondary-font-weight: normal;
+	--e-global-typography-text-font-family: "Gotham Book";
+	--e-global-typography-text-font-weight: 400;
+	--e-global-typography-text-font-style: normal;
+	--e-global-typography-accent-font-family: "Gotham Bold";
+	--e-global-typography-accent-font-weight: 500;
+	background-color: var(--e-global-color-secondary);
+	color: var(--e-global-color-primary);
+	font-family: "Gotham Book", Sans-serif;
+	font-size: 14px;
+	line-height: 1.6em;
+}
+
+.elementor-kit-19 button,
+.elementor-kit-19 input[type="button"],
+.elementor-kit-19 input[type="submit"],
+.elementor-kit-19 .elementor-button {
+	background-color: transparent;
+	font-family: "Gotham Medium", Sans-serif;
+	font-size: 14px;
+	font-weight: normal;
+	text-transform: uppercase;
+	line-height: 1em;
+	letter-spacing: 0.5px;
+
+	/* Cor do texto (branco da marca) */
+	color: #ffffff;
+
+	/* NOVO GRADIENTE: Vermelho → Preto */
+	background-image: linear-gradient(155deg, #e4021a 0%, #000000 100%);
+
+	/* Glow branco suave */
+	box-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+
+	/* Borda branca para destacar no fundo escuro */
+	border-style: solid;
+	border-width: 1px;
+	border-color: #ffffff;
+
+	border-radius: 26px;
+	padding: 13px 24px;
+	transition: 0.25s ease;
+}
+
+/* HOVER — efeito premium */
+.elementor-kit-19 button:hover,
+.elementor-kit-19 input[type="button"]:hover,
+.elementor-kit-19 input[type="submit"]:hover,
+.elementor-kit-19 .elementor-button:hover {
+	background-image: linear-gradient(155deg, #000000 0%, #e4021a 100%);
+	box-shadow: 0 0 16px rgba(255, 255, 255, 0.55);
+	border-color: #e4021a;
+	color: #ffffff;
+}
+
+
+.elementor-kit-19 e-page-transition {
+	background-color: #FFBC7D;
+}
+
+.elementor-kit-19 a {
+	color: #FFFFFF;
+}
+
+.elementor-kit-19 h1 {
+	color: var(--e-global-color-primary);
+	font-family: "ADLaM Display", Sans-serif;
+}
+
+.elementor-kit-19 h2 {
+	color: var(--e-global-color-primary);
+}
+
+.elementor-kit-19 h3 {
+	color: var(--e-global-color-primary);
+}
+
+.elementor-kit-19 h4 {
+	color: var(--e-global-color-primary);
+}
+
+.elementor-kit-19 h5 {
+	color: var(--e-global-color-primary);
+}
+
+.elementor-kit-19 h6 {
+	color: var(--e-global-color-primary);
+}
+
+.elementor-section.elementor-section-boxed>.elementor-container {
+	max-width: 1140px;
+}
+
+.e-con {
+	--container-max-width: 1140px;
+}
+
+.elementor-widget:not(:last-child) {
+	margin-block-end: 20px;
+}
+
+.elementor-element {
+	--widgets-spacing: 20px 20px;
+	--widgets-spacing-row: 20px;
+	--widgets-spacing-column: 20px;
+}
+
+	{}
+
+h1.entry-title {
+	display: var(--page-title-display);
+}
+
+.site-header .site-branding {
+	flex-direction: column;
+	align-items: stretch;
+}
+
+.site-header {
+	padding-inline-end: 0px;
+	padding-inline-start: 0px;
+}
+
+.site-footer .site-branding {
+	flex-direction: column;
+	align-items: stretch;
+}
+
+@media(max-width:1366px) {
+	.elementor-kit-19 {
+		font-size: 15px;
+		line-height: 1.6em;
+	}
+}
+
+@media(max-width:1024px) {
+	.elementor-section.elementor-section-boxed>.elementor-container {
+		max-width: 1024px;
+	}
+
+	.e-con {
+		--container-max-width: 1024px;
+	}
+}
+
+@media(max-width:767px) {
+	.elementor-section.elementor-section-boxed>.elementor-container {
+		max-width: 767px;
+	}
+
+	.e-con {
+		--container-max-width: 767px;
+	}
+}
+
+/* Start Custom Fonts CSS */
+@font-face {
+	font-family: 'Gotham Bold';
+	font-style: normal;
+	font-weight: bold;
+	font-display: auto;
+	src: url('http://hyperxarenalasvegas.com/wp-content/uploads/2024/07/Gotham-Bold.woff') format('woff'),
+		url('http://hyperxarenalasvegas.com/wp-content/uploads/2024/07/Gotham-Bold.ttf') format('truetype');
+}
+
+/* End Custom Fonts CSS */
+/* Start Custom Fonts CSS */
+@font-face {
+	font-family: 'Gotham Medium';
+	font-style: normal;
+	font-weight: normal;
+	font-display: auto;
+	src: url('http://hyperxarenalasvegas.com/wp-content/uploads/2024/07/Gotham-Medium.woff') format('woff'),
+		url('http://hyperxarenalasvegas.com/wp-content/uploads/2024/07/Gotham-Medium.ttf') format('truetype');
+}
+
+/* End Custom Fonts CSS */
+/* Start Custom Fonts CSS */
+@font-face {
+	font-family: 'Gotham Book';
+	font-style: normal;
+	font-weight: normal;
+	font-display: auto;
+	src: url('http://hyperxarenalasvegas.com/wp-content/uploads/2024/07/Gotham-Book.woff') format('woff'),
+		url('http://hyperxarenalasvegas.com/wp-content/uploads/2024/07/Gotham-Book.ttf') format('truetype');
+}
+
+/* End Custom Fonts CSS */
+
+
+
+/* botão-suporte-whatsapp */
+.whatsapp-float {
+	position: fixed;
+	right: 22px;
+	bottom: 22px;
+	width: 64px;
+	height: 64px;
+	background: linear-gradient(155deg, #e4021a 0%, #000000 100%);
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: #ffffff;
+	z-index: 9999;
+	box-shadow:
+		0 0 12px rgba(255, 255, 255, 0.35),
+		0 0 25px rgba(228, 2, 26, 0.6);
+	transition: transform 0.25s ease;
+}
+
+.whatsapp-float:hover {
+	transform: scale(1.08);
+}
+
+.whatsapp-icon {
+	width: 32px;
+	height: 32px;
+}
+
+/* Efeito Pulse */
+.whatsapp-float::before,
+.whatsapp-float::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	border-radius: 50%;
+	background: rgba(228, 2, 26, 0.35);
+	animation: pulse 2.5s infinite;
+	z-index: -1;
+}
+
+.whatsapp-float::after {
+	animation-delay: 1.25s;
+}
+
+@keyframes pulse {
+	0% {
+		transform: scale(1);
+		opacity: 0.7;
+	}
+
+	100% {
+		transform: scale(2.2);
+		opacity: 0;
+	}
+}
