@@ -1,26 +1,22 @@
-FROM node:20-alpine
+FROM node:18-alpine
 
 WORKDIR /app
 
-# Copiar package.json e package-lock.json
+# Copiar package.json
 COPY package*.json ./
 
 # Instalar dependências
 RUN npm install --production
 
-# Copiar código da aplicação
+# Copiar código
 COPY . .
 
-# Expor porta do servidor
-EXPOSE 5500
+# Porta padrão do container
+EXPOSE 80
 
-# Variáveis de ambiente padrão (podem ser sobrescritas)
+# Variáveis de ambiente
 ENV NODE_ENV=production
-ENV PORT=5500
+ENV PORT=80
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
-  CMD node -e "require('http').get('https://guilherme-sga-site.mduiqo.easypanel.host/me', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
-
-# Iniciar aplicação
+# Start do servidor
 CMD ["node", "server.js"]
