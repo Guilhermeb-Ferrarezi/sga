@@ -20,7 +20,7 @@ const nodemailer = require("nodemailer");
 const path = require("path");
 
 const app = express();
-const PORT = process.env.PORT || 5500;
+const PORT = process.env.PORT || 80;
 
 /* =====================
    CONFIGURAÇÕES GERAIS
