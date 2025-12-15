@@ -160,7 +160,7 @@ As tabelas serão criadas automaticamente na primeira conexão.
 
 ## 🐛 Troubleshooting
 
-### Porta 5500 já em uso
+### Porta 80 já em uso
 
 ```bash
 # Mudar porta no docker-compose.yml ou .env
