@@ -1,22 +1,15 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
-# Copiar package.json
 COPY package*.json ./
-
-# Instalar dependências
 RUN npm install --production
 
-# Copiar código
 COPY . .
 
-# Porta padrão do container
+ENV PORT=80
+ENV NODE_ENV=production
+
 EXPOSE 80
 
-# Variáveis de ambiente
-ENV NODE_ENV=production
-ENV PORT=80
-
-# Start do servidor
 CMD ["node", "server.js"]
