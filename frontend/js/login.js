@@ -112,7 +112,7 @@ const loginGoogle = document.getElementById("btn-google");
 
 if (loginGoogle) {
 	loginGoogle.addEventListener("click", () => {
-		window.location.href = "/auth/google";
+		window.location.href = "https://sga.santos-tech.com/auth/google";
 	});
 }
 
