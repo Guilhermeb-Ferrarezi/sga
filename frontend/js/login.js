@@ -1,4 +1,10 @@
 // ============================
+// CONFIG
+// ============================
+const BASE_URL = "https://sga.santos-tech.com";
+const MSG_DELAY = 2000;
+
+// ============================
 // FUNÇÃO DE MENSAGEM
 // ============================
 function mostrarMensagem(texto, tipo = "erro", redirecionar = false, destino = "") {
@@ -6,13 +12,26 @@ function mostrarMensagem(texto, tipo = "erro", redirecionar = false, destino = "
 	if (!msg) return;
 
 	msg.textContent = texto;
-	msg.className = "msg show " + tipo;
+	msg.className = `msg show ${tipo}`;
 
-	if (redirecionar) {
+	if (redirecionar && destino) {
 		setTimeout(() => {
 			window.location.href = destino;
-		}, 2000);
+		}, MSG_DELAY);
 	}
+}
+
+// ============================
+// FUNÇÃO POST PADRÃO
+// ============================
+async function postForm(url, dados) {
+	const response = await fetch(url, {
+		method: "POST",
+		headers: { "Content-Type": "application/x-www-form-urlencoded" },
+		body: new URLSearchParams(dados).toString()
+	});
+
+	return response.json();
 }
 
 // ============================
@@ -20,119 +39,96 @@ function mostrarMensagem(texto, tipo = "erro", redirecionar = false, destino = "
 // ============================
 const btnEntrar = document.getElementById("btn-entrar");
 
-if (btnEntrar) {
-	btnEntrar.addEventListener("click", async () => {
-		btnEntrar.disabled = true;
+btnEntrar?.addEventListener("click", async () => {
+	btnEntrar.disabled = true;
 
-		const usuario = document.getElementById("user").value.trim();
-		const senha = document.getElementById("password").value.trim();
+	const usuario = document.getElementById("user")?.value.trim();
+	const senha = document.getElementById("password")?.value.trim();
 
-		if (!usuario || !senha) {
-			mostrarMensagem("Preencha todos os campos");
-			btnEntrar.disabled = false;
-			return;
-		}
+	if (!usuario || !senha) {
+		mostrarMensagem("Preencha todos os campos");
+		return (btnEntrar.disabled = false);
+	}
 
-		try {
-			const resposta = await fetch("/login", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded"
-				},
-				body: `usuario=${encodeURIComponent(usuario)}&senha=${encodeURIComponent(senha)}`
-			});
+	try {
+		const data = await postForm("/login", { usuario, senha });
 
-			const data = await resposta.json();
-
-			if (data.success) {
-				window.location.href = "http://sga.santos-tech.com/";
-			} else {
-				mostrarMensagem(data.message || "Erro no login");
-				btnEntrar.disabled = false;
-			}
-		} catch {
-			mostrarMensagem("Erro ao conectar ao servidor");
+		if (data.success) {
+			window.location.href = BASE_URL;
+		} else {
+			mostrarMensagem(data.message || "Erro no login");
 			btnEntrar.disabled = false;
 		}
-	});
-}
+	} catch {
+		mostrarMensagem("Erro ao conectar ao servidor");
+		btnEntrar.disabled = false;
+	}
+});
 
 // ============================
 // CRIAR CONTA
 // ============================
 const btnCriar = document.getElementById("btn-criar");
 
-if (btnCriar) {
-	btnCriar.addEventListener("click", async () => {
-		btnCriar.disabled = true;
+btnCriar?.addEventListener("click", async () => {
+	btnCriar.disabled = true;
 
-		const usuario = document.getElementById("user").value.trim();
-		const email = document.getElementById("email").value.trim();
-		const nome = document.getElementById("displayName").value.trim();
-		const senha = document.getElementById("password").value.trim();
+	const usuario = document.getElementById("user")?.value.trim();
+	const email = document.getElementById("email")?.value.trim();
+	const nome = document.getElementById("displayName")?.value.trim();
+	const senha = document.getElementById("password")?.value.trim();
 
-		if (!usuario || !email || !nome || !senha) {
-			mostrarMensagem("Preencha todos os dados");
-			btnCriar.disabled = false;
-			return;
-		}
+	if (!usuario || !email || !nome || !senha) {
+		mostrarMensagem("Preencha todos os dados");
+		return (btnCriar.disabled = false);
+	}
 
-		try {
-			const resposta = await fetch("/register", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/x-www-form-urlencoded"
-				},
-				body:
-					`usuario=${encodeURIComponent(usuario)}` +
-					`&email=${encodeURIComponent(email)}` +
-					`&nome=${encodeURIComponent(nome)}` +
-					`&senha=${encodeURIComponent(senha)}`
-			});
+	try {
+		const data = await postForm("/register", {
+			usuario,
+			email,
+			nome,
+			senha
+		});
 
-			const data = await resposta.json();
-
-			if (data.success) {
-				mostrarMensagem("Conta criada com sucesso", "sucesso", true, "http://sga.santos-tech.com/login");
-			} else {
-				mostrarMensagem(data.message || "Erro ao criar conta");
-				btnCriar.disabled = false;
-			}
-		} catch {
-			mostrarMensagem("Erro ao conectar ao servidor");
+		if (data.success) {
+			mostrarMensagem(
+				"Conta criada com sucesso",
+				"sucesso",
+				true,
+				`${BASE_URL}/login`
+			);
+		} else {
+			mostrarMensagem(data.message || "Erro ao criar conta");
 			btnCriar.disabled = false;
 		}
-	});
-}
+	} catch {
+		mostrarMensagem("Erro ao conectar ao servidor");
+		btnCriar.disabled = false;
+	}
+});
 
 // ============================
 // LOGIN COM GOOGLE
 // ============================
-const loginGoogle = document.getElementById("btn-google");
-
-if (loginGoogle) {
-	loginGoogle.addEventListener("click", () => {
-		window.location.href = "http://sga.santos-tech.com/auth/google";
-	});
-}
+document.getElementById("btn-google")?.addEventListener("click", () => {
+	window.location.href = `${BASE_URL}/auth/google`;
+});
 
 // ============================
-// BOTÃO MOSTRAR SENHA
+// MOSTRAR / OCULTAR SENHA
 // ============================
 const passwordInput = document.getElementById("password");
 const togglePassword = document.getElementById("togglePassword");
 const eyeIcon = document.getElementById("eyeIcon");
 
-if (passwordInput && togglePassword && eyeIcon) {
-	togglePassword.addEventListener("click", () => {
-		if (passwordInput.type === "password") {
-			passwordInput.type = "text";
-			eyeIcon.src = "./image/Login/olho-fechado.svg";
-			eyeIcon.alt = "Ocultar senha";
-		} else {
-			passwordInput.type = "password";
-			eyeIcon.src = "./image/Login/olho-aberto.svg";
-			eyeIcon.alt = "Mostrar senha";
-		}
-	});
-}
+togglePassword?.addEventListener("click", () => {
+	const mostrar = passwordInput.type === "password";
+
+	passwordInput.type = mostrar ? "text" : "password";
+	eyeIcon.src = mostrar
+		? "./image/Login/olho-fechado.svg"
+		: "./image/Login/olho-aberto.svg";
+
+	eyeIcon.alt = mostrar ? "Ocultar senha" : "Mostrar senha";
+});
