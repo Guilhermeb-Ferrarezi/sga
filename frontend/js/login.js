@@ -45,7 +45,7 @@ if (btnEntrar) {
 			const data = await resposta.json();
 
 			if (data.success) {
-				window.location.href = "index.html";
+				window.location.href = "http://sga.santos-tech.com/";
 			} else {
 				mostrarMensagem(data.message || "Erro no login");
 				btnEntrar.disabled = false;
@@ -93,7 +93,7 @@ if (btnCriar) {
 			const data = await resposta.json();
 
 			if (data.success) {
-				mostrarMensagem("Conta criada com sucesso", "sucesso", true, "login.html");
+				mostrarMensagem("Conta criada com sucesso", "sucesso", true, "http://sga.santos-tech.com/login");
 			} else {
 				mostrarMensagem(data.message || "Erro ao criar conta");
 				btnCriar.disabled = false;
@@ -112,7 +112,7 @@ const loginGoogle = document.getElementById("btn-google");
 
 if (loginGoogle) {
 	loginGoogle.addEventListener("click", () => {
-		window.location.href = "https://sga.santos-tech.com/auth/google";
+		window.location.href = "http://sga.santos-tech.com/auth/google";
 	});
 }
 

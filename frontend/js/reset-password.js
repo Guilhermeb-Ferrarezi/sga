@@ -31,7 +31,7 @@ if (btnReset) {
 
 		if (data.success) {
 			setTimeout(() => {
-				window.location.href = "./frontend/login.html";
+				window.location.href = "http://sga.santos-tech.com/login";
 			}, 2000);
 		}
 	});
@@ -56,7 +56,7 @@ if (btnEntrar) {
 		const data = await res.json();
 
 		if (data.success) {
-			window.location.href = "/index.html";
+			window.location.href = "http://sga.santos-tech.com/";
 		} else {
 			resposta.textContent = data.message;
 		}
@@ -69,6 +69,6 @@ if (btnEntrar) {
 const btnGoogle = document.getElementById("btn-google");
 if (btnGoogle) {
 	btnGoogle.onclick = () => {
-		window.location.href = "/auth/google";
+		window.location.href = "http://sga.santos-tech.com/auth/google";
 	};
 }

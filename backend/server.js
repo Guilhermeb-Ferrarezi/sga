@@ -18,6 +18,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const crypto = require("crypto");
 const nodemailer = require("nodemailer");
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
 const PORT = process.env.PORT || 80;
@@ -63,7 +64,8 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: {
-    secure: true,      // HTTPS
+    // set COOKIE_SECURE=true in env to enforce secure cookies (HTTPS)
+    secure: process.env.COOKIE_SECURE === "true",
     httpOnly: true,
     sameSite: "lax"
   }
@@ -79,6 +81,28 @@ app.use(passport.session());
    SERVIR FRONTEND
 ===================== */
 app.use(express.static(path.join(__dirname, "..")));
+
+// Redirect any .html requests to clean URL (without .html)
+app.get('/*.html', (req, res) => {
+  const newPath = req.path.replace(/\.html$/, '');
+  const target = newPath === '/index' ? 'http://sga.santos-tech.com/' : `http://sga.santos-tech.com${newPath}`;
+  res.redirect(target);
+});
+
+// Serve clean and nested URLs (if path requested and corresponding .html exists, serve it)
+app.get('*', (req, res, next) => {
+  // skip API/auth routes so they continue to be handled by existing routes
+  const skip = ['/auth', '/login', '/register', '/reset-password', '/logout', '/me', '/api'];
+  for (const p of skip) {
+    if (req.path.startsWith(p)) return next();
+  }
+
+  // map request path to file on disk (supports nested paths)
+  const candidate = req.path === '/' ? path.join(__dirname, '..', 'index.html') : path.join(__dirname, '..', `${req.path}.html`);
+  if (fs.existsSync(candidate)) return res.sendFile(candidate);
+
+  next();
+});
 
 /* =====================
    TABELA USUÁRIOS
@@ -140,7 +164,7 @@ passport.use(new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/auth/google/callback"
+    callbackURL: "http://sga.santos-tech.com/auth/google/callback"
   },
   async (_, __, profile, done) => {
     try {
@@ -202,8 +226,8 @@ app.get("/auth/google",
 );
 
 app.get("/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login.html" }),
-  (req, res) => res.redirect("/index.html")
+  passport.authenticate("google", { failureRedirect: "http://sga.santos-tech.com/login" }),
+  (req, res) => res.redirect("http://sga.santos-tech.com/")
 );
 
 /* =====================
@@ -274,7 +298,7 @@ app.get("/me", (req, res) => {
    LOGOUT
 ===================== */
 app.get("/logout", (req, res) => {
-  req.logout(() => res.redirect("/login.html"));
+  req.logout(() => res.redirect("http://sga.santos-tech.com/login"));
 });
 
 /* =====================
