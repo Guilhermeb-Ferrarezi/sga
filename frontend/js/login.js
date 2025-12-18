@@ -1,7 +1,7 @@
 // ============================
 // CONFIG
 // ============================
-const API_URL = "https://api.sga.santos-tech.com";
+const API_URL = "https://api.santos-tech.com";
 const FRONTEND_URL = "https://sga.santos-tech.com";
 const MSG_DELAY = 2000;
 
