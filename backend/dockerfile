@@ -1,11 +1,22 @@
 FROM node:18-alpine
 
+# Diretório da aplicação
 WORKDIR /app
 
+# Copia package.json primeiro (melhor cache)
 COPY package*.json ./
-RUN npm install
 
+# Instala apenas dependências de produção
+RUN npm install --production
+
+# Copia o resto do código
 COPY . .
 
+# Porta usada pelo Express
 EXPOSE 80
+
+# Variável de ambiente
+ENV NODE_ENV=production
+
+# Inicia o servidor
 CMD ["node", "server.js"]
