@@ -1,74 +1,107 @@
-const senha = document.getElementById("password");
-const confirmar = document.getElementById("confirm-password");
+// ============================
+// CONFIG
+// ============================
+const BASE_URL = "https://sga.santos-tech.com";
+const MSG_DELAY = 2000;
+
+// ============================
+// ELEMENTOS
+// ============================
+const senhaInput = document.getElementById("password");
+const confirmarInput = document.getElementById("confirm-password");
 const btnReset = document.getElementById("btn-reset");
+const btnEntrar = document.getElementById("btn-entrar");
+const btnGoogle = document.getElementById("btn-google");
 const resposta = document.getElementById("resposta");
 
-// =========================
-// RESET SENHA
-// =========================
-if (btnReset) {
-	btnReset.addEventListener("click", async () => {
-		if (senha.value.length < 6) {
-			resposta.textContent = "Senha fraca (mínimo 6 caracteres)";
-			return;
-		}
+// ============================
+// FUNÇÃO DE MENSAGEM
+// ============================
+function mostrarMensagem(texto) {
+	if (!resposta) return;
+	resposta.textContent = texto;
+}
 
-		if (senha.value !== confirmar.value) {
-			resposta.textContent = "As senhas não coincidem";
-			return;
-		}
+// ============================
+// FUNÇÃO POST JSON
+// ============================
+async function postJSON(url, data) {
+	const res = await fetch(url, {
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify(data)
+	});
+	return res.json();
+}
 
-		const token = new URLSearchParams(window.location.search).get("token");
+// ============================
+// RESET DE SENHA
+// ============================
+btnReset?.addEventListener("click", async () => {
+	if (!senhaInput || !confirmarInput) return;
 
-		const res = await fetch("/reset-password", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			body: JSON.stringify({ token, senha: senha.value })
+	if (senhaInput.value.length < 6) {
+		return mostrarMensagem("Senha fraca (mínimo 6 caracteres)");
+	}
+
+	if (senhaInput.value !== confirmarInput.value) {
+		return mostrarMensagem("As senhas não coincidem");
+	}
+
+	const token = new URLSearchParams(window.location.search).get("token");
+	if (!token) return mostrarMensagem("Token inválido");
+
+	try {
+		const data = await postJSON("/reset-password", {
+			token,
+			senha: senhaInput.value
 		});
 
-		const data = await res.json();
-		resposta.textContent = data.message;
+		mostrarMensagem(data.message || "Senha atualizada");
 
 		if (data.success) {
 			setTimeout(() => {
-				window.location.href = "./frontend/login.html";
-			}, 2000);
+				window.location.href = `${BASE_URL}/login`;
+			}, MSG_DELAY);
 		}
-	});
-}
+	} catch {
+		mostrarMensagem("Erro ao conectar ao servidor");
+	}
+});
 
-// =========================
-// LOGIN
-// =========================
-const btnEntrar = document.getElementById("btn-entrar");
+// ============================
+// LOGIN NORMAL
+// ============================
+btnEntrar?.addEventListener("click", async () => {
+	const usuario = document.getElementById("user")?.value.trim();
+	const senha = senhaInput?.value.trim();
 
-if (btnEntrar) {
-	btnEntrar.addEventListener("click", async () => {
-		const usuario = document.getElementById("user").value;
-		const senha = document.getElementById("password").value;
+	if (!usuario || !senha) {
+		return mostrarMensagem("Preencha todos os campos");
+	}
 
+	try {
 		const res = await fetch("/login", {
 			method: "POST",
 			headers: { "Content-Type": "application/x-www-form-urlencoded" },
-			body: `usuario=${encodeURIComponent(usuario)}&senha=${encodeURIComponent(senha)}`
+			body: new URLSearchParams({ usuario, senha }).toString()
 		});
 
 		const data = await res.json();
 
 		if (data.success) {
-			window.location.href = "/index.html";
+			window.location.href = BASE_URL;
 		} else {
-			resposta.textContent = data.message;
+			mostrarMensagem(data.message || "Erro no login");
 		}
-	});
-}
+	} catch {
+		mostrarMensagem("Erro ao conectar ao servidor");
+	}
+});
 
-// =========================
-// GOOGLE
-// =========================
-const btnGoogle = document.getElementById("btn-google");
-if (btnGoogle) {
-	btnGoogle.onclick = () => {
-		window.location.href = "/auth/google";
-	};
-}
+// ============================
+// LOGIN COM GOOGLE
+// ============================
+btnGoogle?.addEventListener("click", () => {
+	window.location.href = `${BASE_URL}/auth/google`;
+});

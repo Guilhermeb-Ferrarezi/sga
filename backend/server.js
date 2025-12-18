@@ -21,6 +21,7 @@ const PORT = process.env.PORT || 3000;
 /* =====================
    MIDDLEWARE
 ===================== */
+<<<<<<< HEAD
 app.set("trust proxy", 1);
 
 app.use(cors({
@@ -28,6 +29,12 @@ app.use(cors({
   credentials: true
 }));
 
+=======
+app.use(cors({
+  origin: "https://sga.santos-tech.com",
+  credentials: true
+}));
+>>>>>>> 3dac2424cdf95aee12514c426949517f334e67bf
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -46,6 +53,11 @@ const pool = new Pool({
 /* =====================
    SESSION
 ===================== */
+<<<<<<< HEAD
+=======
+app.set("trust proxy", 1);
+
+>>>>>>> 3dac2424cdf95aee12514c426949517f334e67bf
 app.use(session({
   store: new pgSession({
     pool,
@@ -68,13 +80,60 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 /* =====================
+<<<<<<< HEAD
+=======
+   USER TABLE
+===================== */
+pool.query(`
+  CREATE TABLE IF NOT EXISTS usuarios (
+    id SERIAL PRIMARY KEY,
+    usuario TEXT UNIQUE,
+    email TEXT UNIQUE,
+    nome TEXT,
+    senha TEXT,
+    google_id TEXT,
+    foto TEXT
+  )
+`);
+
+/* =====================
+   LOCAL STRATEGY
+===================== */
+passport.use(new LocalStrategy(
+  { usernameField: "usuario", passwordField: "senha" },
+  async (username, senha, done) => {
+    try {
+      const { rows } = await pool.query(
+        "SELECT * FROM usuarios WHERE usuario=$1 OR email=$1",
+        [username]
+      );
+
+      const user = rows[0];
+      if (!user || !user.senha) return done(null, false);
+
+      const ok = await bcrypt.compare(senha, user.senha);
+      if (!ok) return done(null, false);
+
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
+  }
+));
+
+/* =====================
+>>>>>>> 3dac2424cdf95aee12514c426949517f334e67bf
    GOOGLE STRATEGY
 ===================== */
 passport.use(new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+<<<<<<< HEAD
     callbackURL: `${process.env.API_URL}/auth/google/callback`
+=======
+    callbackURL: "https://api.sga.santos-tech.com/auth/google/callback"
+>>>>>>> 3dac2424cdf95aee12514c426949517f334e67bf
   },
   async (_, __, profile, done) => {
     const email = profile.emails[0].value;
@@ -101,10 +160,14 @@ passport.use(new GoogleStrategy(
 
 passport.serializeUser((user, done) => done(null, user.id));
 passport.deserializeUser(async (id, done) => {
+<<<<<<< HEAD
   const { rows } = await pool.query(
     "SELECT * FROM usuarios WHERE id=$1",
     [id]
   );
+=======
+  const { rows } = await pool.query("SELECT * FROM usuarios WHERE id=$1", [id]);
+>>>>>>> 3dac2424cdf95aee12514c426949517f334e67bf
   done(null, rows[0]);
 });
 
@@ -129,13 +192,22 @@ app.get("/auth/google",
 );
 
 app.get("/auth/google/callback",
+<<<<<<< HEAD
   passport.authenticate("google", { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
   (req, res) => res.redirect(process.env.FRONTEND_URL)
+=======
+  passport.authenticate("google", { failureRedirect: "https://sga.santos-tech.com/login" }),
+  (req, res) => res.redirect("https://sga.santos-tech.com")
+>>>>>>> 3dac2424cdf95aee12514c426949517f334e67bf
 );
 
 /* =====================
    START
 ===================== */
 app.listen(PORT, () => {
+<<<<<<< HEAD
   console.log(`🚀 API rodando na porta ${PORT}`);
+=======
+  console.log(`🚀 Backend rodando na porta ${PORT}`);
+>>>>>>> 3dac2424cdf95aee12514c426949517f334e67bf
 });
