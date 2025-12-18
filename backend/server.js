@@ -19,10 +19,13 @@ const app = express();
 const PORT = process.env.PORT || 80;
 
 /* =====================
-   MIDDLEWARE
+   TRUST PROXY (Cloudflare)
 ===================== */
 app.set("trust proxy", 1);
 
+/* =====================
+   CORS
+===================== */
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   credentials: true
@@ -40,8 +43,43 @@ const pool = new Pool({
   database: process.env.DB_NAME,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
-  ssl: process.env.DB_SSL === "true" ? { rejectUnauthorized: false } : false
+  ssl: process.env.DB_SSL === "true"
+    ? { rejectUnauthorized: false }
+    : false
 });
+
+/* =====================
+   CREATE TABLES
+===================== */
+async function initDB() {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS usuarios (
+        id SERIAL PRIMARY KEY,
+        usuario TEXT UNIQUE,
+        email TEXT UNIQUE,
+        nome TEXT,
+        senha TEXT,
+        google_id TEXT,
+        foto TEXT
+      )
+    `);
+
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS session (
+        sid VARCHAR NOT NULL PRIMARY KEY,
+        sess JSON NOT NULL,
+        expire TIMESTAMP NOT NULL
+      )
+    `);
+
+    console.log("✅ Banco e tabelas prontos");
+  } catch (err) {
+    console.error("❌ Erro ao criar tabelas:", err);
+  }
+}
+
+initDB();
 
 /* =====================
    SESSION
@@ -57,7 +95,7 @@ app.use(session({
   cookie: {
     secure: true,
     httpOnly: true,
-    sameSite: "none" // ⚠️ essencial para frontend + api em domínios diferentes
+    sameSite: "none"
   }
 }));
 
@@ -66,6 +104,31 @@ app.use(session({
 ===================== */
 app.use(passport.initialize());
 app.use(passport.session());
+
+/* =====================
+   LOCAL STRATEGY
+===================== */
+passport.use(new LocalStrategy(
+  { usernameField: "usuario", passwordField: "senha" },
+  async (username, senha, done) => {
+    try {
+      const { rows } = await pool.query(
+        "SELECT * FROM usuarios WHERE usuario=$1 OR email=$1",
+        [username]
+      );
+
+      const user = rows[0];
+      if (!user || !user.senha) return done(null, false);
+
+      const ok = await bcrypt.compare(senha, user.senha);
+      if (!ok) return done(null, false);
+
+      done(null, user);
+    } catch (err) {
+      done(err);
+    }
+  }
+));
 
 /* =====================
    GOOGLE STRATEGY
@@ -77,29 +140,34 @@ passport.use(new GoogleStrategy(
     callbackURL: `${process.env.API_URL}/auth/google/callback`
   },
   async (_, __, profile, done) => {
-    const email = profile.emails[0].value;
-    const nome = profile.displayName;
-    const foto = profile.photos[0].value;
-    const googleId = profile.id;
+    try {
+      const email = profile.emails[0].value;
+      const nome = profile.displayName;
+      const foto = profile.photos[0].value;
+      const googleId = profile.id;
 
-    const { rows } = await pool.query(
-      "SELECT * FROM usuarios WHERE email=$1",
-      [email]
-    );
+      const { rows } = await pool.query(
+        "SELECT * FROM usuarios WHERE email=$1",
+        [email]
+      );
 
-    if (rows[0]) return done(null, rows[0]);
+      if (rows[0]) return done(null, rows[0]);
 
-    const result = await pool.query(
-      `INSERT INTO usuarios (email,nome,google_id,foto)
-       VALUES ($1,$2,$3,$4) RETURNING *`,
-      [email, nome, googleId, foto]
-    );
+      const result = await pool.query(
+        `INSERT INTO usuarios (email, nome, google_id, foto)
+         VALUES ($1,$2,$3,$4) RETURNING *`,
+        [email, nome, googleId, foto]
+      );
 
-    done(null, result.rows[0]);
+      done(null, result.rows[0]);
+    } catch (err) {
+      done(err);
+    }
   }
 ));
 
 passport.serializeUser((user, done) => done(null, user.id));
+
 passport.deserializeUser(async (id, done) => {
   const { rows } = await pool.query(
     "SELECT * FROM usuarios WHERE id=$1",
@@ -129,13 +197,15 @@ app.get("/auth/google",
 );
 
 app.get("/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: `${process.env.FRONTEND_URL}/login` }),
+  passport.authenticate("google", {
+    failureRedirect: `${process.env.FRONTEND_URL}/login`
+  }),
   (req, res) => res.redirect(process.env.FRONTEND_URL)
 );
 
 /* =====================
    START
 ===================== */
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 API rodando na porta ${PORT}`);
 });
