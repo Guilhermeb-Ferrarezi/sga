@@ -1,7 +1,8 @@
 // ============================
 // CONFIG
 // ============================
-const BASE_URL = "https://sga.santos-tech.com";
+const API_URL = "https://api.sga.santos-tech.com";
+const FRONTEND_URL = "https://sga.santos-tech.com";
 const MSG_DELAY = 2000;
 
 // ============================
@@ -24,12 +25,19 @@ function mostrarMensagem(texto, tipo = "erro", redirecionar = false, destino = "
 // ============================
 // FUNÇÃO POST PADRÃO
 // ============================
-async function postForm(url, dados) {
-	const response = await fetch(url, {
+async function postForm(endpoint, dados) {
+	const response = await fetch(`${API_URL}${endpoint}`, {
 		method: "POST",
-		headers: { "Content-Type": "application/x-www-form-urlencoded" },
+		credentials: "include", // 🔥 essencial para cookies/sessão
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded"
+		},
 		body: new URLSearchParams(dados).toString()
 	});
+
+	if (!response.ok) {
+		throw new Error("Erro na requisição");
+	}
 
 	return response.json();
 }
@@ -47,19 +55,21 @@ btnEntrar?.addEventListener("click", async () => {
 
 	if (!usuario || !senha) {
 		mostrarMensagem("Preencha todos os campos");
-		return (btnEntrar.disabled = false);
+		btnEntrar.disabled = false;
+		return;
 	}
 
 	try {
 		const data = await postForm("/login", { usuario, senha });
 
 		if (data.success) {
-			window.location.href = BASE_URL;
+			window.location.href = FRONTEND_URL;
 		} else {
-			mostrarMensagem(data.message || "Erro no login");
+			mostrarMensagem(data.message || "Usuário ou senha inválidos");
 			btnEntrar.disabled = false;
 		}
-	} catch {
+	} catch (err) {
+		console.error(err);
 		mostrarMensagem("Erro ao conectar ao servidor");
 		btnEntrar.disabled = false;
 	}
@@ -80,7 +90,8 @@ btnCriar?.addEventListener("click", async () => {
 
 	if (!usuario || !email || !nome || !senha) {
 		mostrarMensagem("Preencha todos os dados");
-		return (btnCriar.disabled = false);
+		btnCriar.disabled = false;
+		return;
 	}
 
 	try {
@@ -96,13 +107,14 @@ btnCriar?.addEventListener("click", async () => {
 				"Conta criada com sucesso",
 				"sucesso",
 				true,
-				`${BASE_URL}/login`
+				`${FRONTEND_URL}/login`
 			);
 		} else {
 			mostrarMensagem(data.message || "Erro ao criar conta");
 			btnCriar.disabled = false;
 		}
-	} catch {
+	} catch (err) {
+		console.error(err);
 		mostrarMensagem("Erro ao conectar ao servidor");
 		btnCriar.disabled = false;
 	}
@@ -111,8 +123,10 @@ btnCriar?.addEventListener("click", async () => {
 // ============================
 // LOGIN COM GOOGLE
 // ============================
-document.getElementById("btn-google")?.addEventListener("click", () => {
-	window.location.href = `${BASE_URL}/auth/google`;
+const btnGoogle = document.getElementById("btn-google");
+
+btnGoogle?.addEventListener("click", () => {
+	window.location.href = `${API_URL}/auth/google`;
 });
 
 // ============================
@@ -126,9 +140,12 @@ togglePassword?.addEventListener("click", () => {
 	const mostrar = passwordInput.type === "password";
 
 	passwordInput.type = mostrar ? "text" : "password";
-	eyeIcon.src = mostrar
-		? "./image/Login/olho-fechado.svg"
-		: "./image/Login/olho-aberto.svg";
 
-	eyeIcon.alt = mostrar ? "Ocultar senha" : "Mostrar senha";
+	if (eyeIcon) {
+		eyeIcon.src = mostrar
+			? "./image/Login/olho-fechado.svg"
+			: "./image/Login/olho-aberto.svg";
+
+		eyeIcon.alt = mostrar ? "Ocultar senha" : "Mostrar senha";
+	}
 });
