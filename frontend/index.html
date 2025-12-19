@@ -2718,7 +2718,8 @@ end key */
 						<div>
 							<span id="ola-usuario"></span>
 						</div>
-						<div class="elementor-element elementor-element-ed2945b elementor-align-right elementor-laptop-align-right elementor-widget__width-initial elementor-hidden-mobile_extra elementor-widget elementor-widget-button"
+						<!-- Botão de Login (mostra quando não logado) -->
+						<div id="btn-login" class="elementor-element elementor-element-ed2945b elementor-align-right elementor-laptop-align-right elementor-widget__width-initial elementor-hidden-mobile_extra elementor-widget elementor-widget-button"
 							data-id="ed2945b" data-element_type="widget" data-widget_type="button.default">
 							<div class="elementor-widget-container">
 								<div class="elementor-button-wrapper">
@@ -2726,6 +2727,21 @@ end key */
 										href="./login.html">
 										<span class="elementor-button-content-wrapper">
 											<span class="elementor-button-text">Entrar</span>
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<!-- Área do Usuário Logado (mostra quando logado) -->
+						<div id="user-logged" class="elementor-element elementor-element-ed2945b elementor-align-right elementor-laptop-align-right elementor-widget__width-initial elementor-hidden-mobile_extra elementor-widget elementor-widget-button"
+							data-id="ed2945b" data-element_type="widget" data-widget_type="button.default" style="display: none;">
+							<div class="elementor-widget-container">
+								<div class="elementor-button-wrapper" style="display: flex; gap: 10px; align-items: center;">
+									<span id="user-name" style="color: #fff; margin-right: 10px;"></span>
+									<a class="elementor-button elementor-button-link elementor-size-sm"
+										href="./perfil.html" style="text-decoration: none;">
+										<span class="elementor-button-content-wrapper">
+											<span class="elementor-button-text">Perfil</span>
 										</span>
 									</a>
 								</div>
@@ -5063,6 +5079,7 @@ end key */
 		src="https://monitor.fraudblocker.com/b.js?sid=HgabHGI53bnJSeixysqXT&amp;vid=b9d3065287e76b274cb8eab6f999290a&amp;tz=America%2FSao_Paulo&amp;os=Windows%2010&amp;b=Chrome%20143.0.0.0&amp;bo=0&amp;ef=0"></script>
 	<script type="text/javascript"
 		src="https://js.callrail.com/group/0/3439d3839defb45a66dd/6de45d39-00fb-45d4-81c9-8805a5cf3148/poll.js?t=1765480980398&amp;ids%5B%5D=751288417"></script>
+	<script src="./js/auth.js"></script>
 </body>
 
 </html>

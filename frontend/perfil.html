@@ -7,29 +7,58 @@
 
     <link rel="stylesheet" href="./css/login.css">
     <style>
-        .perfil {
+        .perfil-wrapper {
+            max-width: 400px;
+            width: 100%;
+            background: #1a1a1a;
+            border-radius: 18px;
+            padding: 40px;
             text-align: center;
+            box-shadow: 0 0 35px rgba(0, 0, 0, 0.7);
         }
 
         .perfil img {
             width: 90px;
             height: 90px;
             border-radius: 50%;
-            margin-bottom: 12px;
+            margin-bottom: 20px;
+            object-fit: cover;
+            border: 3px solid #e4021a;
         }
 
         .perfil h3 {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
+            font-size: 24px;
+            color: #fff;
         }
 
         .perfil p {
             color: #aaa;
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+
+        #btn-logout {
+            margin-top: 20px;
+            background: #e4021a;
+            border-color: #e4021a;
+        }
+
+        #btn-logout:hover {
+            background: #c00218;
+            border-color: #c00218;
+        }
+
+        #btn-logout:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
         }
     </style>
 </head>
 
 <body>
-    <div class="login-container perfil">
+    <div class="perfil-wrapper perfil">
         <img id="foto" src="" alt="Foto do usuário">
         <h3 id="nome"></h3>
         <p id="email"></p>

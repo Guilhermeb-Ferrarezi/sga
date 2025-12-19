@@ -2,6 +2,7 @@
 // CONFIG
 // ============================
 const BASE_URL = "https://sga.santos-tech.com";
+const API_URL = "https://api.santos-tech.com";
 
 // ============================
 // DOM READY
@@ -15,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // ============================
 async function verificarLogin() {
 	try {
-		const res = await fetch("/me", { credentials: "include" });
+		const res = await fetch(`${API_URL}/me`, { credentials: "include" });
 		const data = await res.json();
 
 		const btnLogin = document.getElementById("btn-login");
@@ -45,7 +46,7 @@ async function verificarLogin() {
 // ============================
 async function logout() {
 	try {
-		await fetch("/logout", {
+		await fetch(`${API_URL}/logout`, {
 			method: "GET",
 			credentials: "include"
 		});
