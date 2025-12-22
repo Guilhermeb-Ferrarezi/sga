@@ -179,6 +179,10 @@ passport.deserializeUser(async (id, done) => {
 /* =====================
    ROUTES
 ===================== */
+app.post("", async (req, res) => {
+  res.send("API funcionando!");
+});
+
 app.post("/login", passport.authenticate("local"), (req, res) => {
   res.json({ success: true, user: req.user });
 });
@@ -202,6 +206,13 @@ app.get("/auth/google/callback",
   }),
   (req, res) => res.redirect(process.env.FRONTEND_URL)
 );
+
+app.post("api/ia", (req, res) => {
+  const message = [
+    { corujao: "R$100", },
+  ];
+  res.json({ message });
+});
 
 /* =====================
    START
