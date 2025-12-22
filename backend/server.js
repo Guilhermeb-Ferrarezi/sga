@@ -207,11 +207,11 @@ app.get("/auth/google/callback",
   (req, res) => res.redirect(process.env.FRONTEND_URL)
 );
 
-app.post("api/ia", (req, res) => {
+app.get("/api/ia", (req, res) => {
   const message = [
     { corujao: "R$100", },
   ];
-  res.json({ message });
+  res.send({ message });
 });
 
 /* =====================
