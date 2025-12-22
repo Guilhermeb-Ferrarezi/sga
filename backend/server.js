@@ -179,7 +179,7 @@ passport.deserializeUser(async (id, done) => {
 /* =====================
    ROUTES
 ===================== */
-app.get("", async (req, res) => {
+app.get("/", async (req, res) => {
   res.send("API funcionando!");
 });
 
